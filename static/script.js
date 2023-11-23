@@ -258,5 +258,3 @@ window.onload = function CalendarControl() {
     };
     calendarControl.init();
   }
-
-  const calendarControl = new CalendarControl();
