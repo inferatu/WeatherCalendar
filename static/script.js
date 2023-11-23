@@ -117,11 +117,15 @@ window.onload = function CalendarControl() {
 
       plotDayNames: function () {
         document.querySelector(".calendar .calendar-body").innerHTML = "";
-        const daysOfWeek = isRussian ? ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"] : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]; // Define day names based on language
+        const daysOfWeek = isRussian
+          ? ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"] // Adjusted for Russian language
+          : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // Adjusted for English language
+
         for (let i = 0; i < daysOfWeek.length; i++) {
           document.querySelector(".calendar .calendar-body").innerHTML += `<div>${daysOfWeek[i]}</div>`;
         }
       },
+
       plotDates: function () {
         document.querySelector(".calendar .calendar-body").innerHTML = "";
         calendarControl.plotDayNames();
