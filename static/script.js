@@ -82,6 +82,12 @@ window.onload = function CalendarControl() {
 
       toggleLanguage: function () {
         isRussian = !isRussian; // Toggle language flag
+        let todayText = isRussian ? 'Сегодня' : 'Today'; // Adjust today's text after language toggle
+        document.querySelector('.calendar-today-date').innerHTML = `${todayText}: 
+          ${calendarControl.calWeekDays[calendarControl.localDate.getDay()]}, 
+          ${calendarControl.localDate.getDate()}, 
+          ${calendarControl.calMonthName[calendarControl.localDate.getMonth()]} 
+          ${calendarControl.localDate.getFullYear()}`;
         calendarControl.displayMonth(); // Update displayed month name
         calendarControl.plotDayNames(); // Update displayed day names
         calendarControl.plotDates(); // Replot dates with the new language
@@ -89,37 +95,46 @@ window.onload = function CalendarControl() {
 
 
       plotSelectors: function () {
-        document.querySelector(
-          ".calendar"
-        ).innerHTML += `<div class="calendar-inner"><div class="calendar-controls">
-          <div class="calendar-prev"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><path fill="#666" d="M88.2 3.8L35.8 56.23 28 64l7.8 7.78 52.4 52.4 9.78-7.76L45.58 64l52.4-52.4z"/></svg></a></div>
-          <div class="calendar-year-month">
-          <div class="calendar-month-label"></div>
-          <div>-</div>
-          <div class="calendar-year-label"></div>
-          </div>
-          <div class="calendar-next"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><path fill="#666" d="M38.8 124.2l52.4-52.42L99 64l-7.77-7.78-52.4-52.4-9.8 7.77L81.44 64 29 116.42z"/></svg></a></div>
-          </div>
-          <div class="calendar-today-date">Today: 
-            ${calendarControl.calWeekDays[calendarControl.localDate.getDay()]}, 
-            ${calendarControl.localDate.getDate()}, 
-            ${calendarControl.calMonthName[calendarControl.localDate.getMonth()]} 
-            ${calendarControl.localDate.getFullYear()}
-          </div>
-          <div class="calendar-body"></div></div>`;
+          document.querySelector(
+            ".calendar"
+          ).innerHTML += `<div class="calendar-inner"><div class="calendar-controls">
+              <div class="calendar-prev"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><path fill="#666" d="M88.2 3.8L35.8 56.23 28 64l7.8 7.78 52.4 52.4 9.78-7.76L45.58 64l52.4-52.4z"/></svg></a></div>
+              <div class="calendar-year-month">
+              <div class="calendar-month-label"></div>
+              <div>-</div>
+              <div class="calendar-year-label"></div>
+              </div>
+              <div class="calendar-next"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><path fill="#666" d="M38.8 124.2l52.4-52.42L99 64l-7.77-7.78-52.4-52.4-9.8 7.77L81.44 64 29 116.42z"/></svg></a></div>
+              </div>
+              <div class="calendar-today-date">Today: 
+                ${calendarControl.calWeekDays[calendarControl.localDate.getDay()]}, 
+                ${calendarControl.localDate.getDate()}, 
+                ${calendarControl.calMonthName[calendarControl.localDate.getMonth()]} 
+                ${calendarControl.localDate.getFullYear()}
+              </div>
+              <div class="calendar-body"></div></div>`;
+
           const languageToggleBtn = document.createElement("button");
           languageToggleBtn.textContent = "Toggle Language/Переключить язык";
           languageToggleBtn.addEventListener("click", calendarControl.toggleLanguage);
           document.querySelector(".calendar").appendChild(languageToggleBtn);
+
+          let todayText = isRussian ? 'Сегодня' : 'Today'; // Define today's text based on the language
+          document.querySelector('.calendar-today-date').innerHTML = `${todayText}: 
+            ${calendarControl.calWeekDays[calendarControl.localDate.getDay()]}, 
+            ${calendarControl.localDate.getDate()}, 
+            ${calendarControl.calMonthName[calendarControl.localDate.getMonth()]} 
+            ${calendarControl.localDate.getFullYear()}`;
       },
+
 
 
 
       plotDayNames: function () {
         document.querySelector(".calendar .calendar-body").innerHTML = "";
         const daysOfWeek = isRussian
-          ? ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"] // Adjusted for Russian language
-          : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // Adjusted for English language
+          ? ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"] // Fixed length for Russian
+          : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // Fixed length  for English language
 
         for (let i = 0; i < daysOfWeek.length; i++) {
           document.querySelector(".calendar .calendar-body").innerHTML += `<div>${daysOfWeek[i]}</div>`;
@@ -243,5 +258,3 @@ window.onload = function CalendarControl() {
     };
     calendarControl.init();
   }
-
-  const calendarControl = new CalendarControl();
