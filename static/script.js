@@ -1,5 +1,7 @@
 window.onload = function CalendarControl() {
     const calendar = new Date();
+    let isRussian = false; //checking current state.
+
     const calendarControl = {
       localDate: new Date(),
       prevMonthLastDate: null,
@@ -61,10 +63,14 @@ window.onload = function CalendarControl() {
         yearLabel.innerHTML = calendar.getFullYear();
       },
       displayMonth: function () {
-        let monthLabel = document.querySelector(
-          ".calendar .calendar-month-label"
-        );
-        monthLabel.innerHTML = calendarControl.calMonthName[calendar.getMonth()];
+        let monthLabel = document.querySelector(".calendar .calendar-month-label");
+        const currentMonth = isRussian
+        ? calendarControl.calMonthName[calendar.getMonth()]
+        : [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+          ][calendar.getMonth()]; // Display full English month name
+        monthLabel.innerHTML = currentMonth;
       },
       selectDate: function (e) {
         console.log(
@@ -73,6 +79,15 @@ window.onload = function CalendarControl() {
           } ${calendar.getFullYear()}`
         );
       },
+
+      toggleLanguage: function () {
+        isRussian = !isRussian; // Toggle language flag
+        calendarControl.displayMonth(); // Update displayed month name
+        calendarControl.plotDayNames(); // Update displayed day names
+        calendarControl.plotDates(); // Replot dates with the new language
+      },
+
+
       plotSelectors: function () {
         document.querySelector(
           ".calendar"
@@ -92,14 +107,25 @@ window.onload = function CalendarControl() {
             ${calendarControl.localDate.getFullYear()}
           </div>
           <div class="calendar-body"></div></div>`;
+          const languageToggleBtn = document.createElement("button");
+          languageToggleBtn.textContent = "Toggle Language/Переключить язык";
+          languageToggleBtn.addEventListener("click", calendarControl.toggleLanguage);
+          document.querySelector(".calendar").appendChild(languageToggleBtn);
       },
+
+
+
       plotDayNames: function () {
-        for (let i = 0; i < calendarControl.calWeekDays.length; i++) {
-          document.querySelector(
-            ".calendar .calendar-body"
-          ).innerHTML += `<div>${calendarControl.calWeekDays[i]}</div>`;
+        document.querySelector(".calendar .calendar-body").innerHTML = "";
+        const daysOfWeek = isRussian
+          ? ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"] // Adjusted for Russian language
+          : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // Adjusted for English language
+
+        for (let i = 0; i < daysOfWeek.length; i++) {
+          document.querySelector(".calendar .calendar-body").innerHTML += `<div>${daysOfWeek[i]}</div>`;
         }
       },
+
       plotDates: function () {
         document.querySelector(".calendar .calendar-body").innerHTML = "";
         calendarControl.plotDayNames();
