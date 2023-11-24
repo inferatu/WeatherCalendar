@@ -5,7 +5,7 @@ window.onload = function CalendarControl() {
     const calendarControl = {
       localDate: new Date(),
       prevMonthLastDate: null,
-      calWeekDays: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
+      calWeekDays: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
       calMonthName: [
         "Январь",
         "Февраль",
